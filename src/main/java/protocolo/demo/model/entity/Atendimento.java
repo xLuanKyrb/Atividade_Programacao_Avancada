@@ -6,6 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "atendimento")
 @Data
 public class Atendimento {
     @Id
@@ -13,8 +14,16 @@ public class Atendimento {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "paciente_id")
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuarioResponsavel;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
+
+    @Column(nullable = false)
     private LocalDateTime dataEntrada;
+
+    private String status = "EM_ANDAMENTO";
 
 }
