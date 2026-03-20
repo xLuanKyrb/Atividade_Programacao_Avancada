@@ -1,9 +1,12 @@
-package protocolo.demo.model;
+package protocolo.demo.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import protocolo.demo.model.embeddable.Endereco;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pessoa")
@@ -15,17 +18,14 @@ public class Pessoa {
 
     @Column(nullable = false)
     private String nomeCompleto;
-
-    @Column(unique = true, nullable = false)
     private String cpf;
-
     private String rg;
     private String cns;
     private LocalDateTime dataNascimento;
-    private String telefoneResidencial;
-    private String telefoneCelular;
 
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Telefone> telefones = new ArrayList<>();
 
-    @Embeddable
+    @Embedded
     private Endereco endereco;
 }

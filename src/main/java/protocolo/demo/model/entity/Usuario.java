@@ -1,17 +1,14 @@
-package protocolo.demo.model;
+package protocolo.demo.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 @Entity
 @Table(name = "usuario")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Usuario extends Pessoa{
+public class Usuario extends Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

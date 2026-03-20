@@ -1,4 +1,4 @@
-package protocolo.demo.model;
+package protocolo.demo.model.embeddable;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;

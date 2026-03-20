@@ -1,4 +1,4 @@
-package protocolo.demo.model;
+package protocolo.demo.model.enums;
 
 public enum TipoTelefone {
     CELULAR,
