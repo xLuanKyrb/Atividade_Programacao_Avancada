@@ -1,4 +1,4 @@
-package protocolo.demo.model;
+package protocolo.demo.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

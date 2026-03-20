@@ -35,6 +35,8 @@ body {
 
         .table {
             width: 50%;
+        
+            text-align: center;
         }
         .table th, .table td {
             border: 1px solid #ccc;
