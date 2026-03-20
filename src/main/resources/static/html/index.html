@@ -14,8 +14,8 @@
     
 </header>
 
-    <section>
-        <form action="submit" method="post">
+    <section class = "form-layout">
+        <form id="protocolo-form" method="submit">
             <fieldset>
                 <legend>Dados</legend>
 
@@ -26,10 +26,10 @@
                     <input type="text" id="atendimento" name="atendimento">
 <br>
                     <label for="dataNascimento">Data Nascimento</label>
-                    <input type="text" name="" id="dataNascimento">
+                    <input type="text" name="dataNascimento" id="dataNascimento" maxlength="10" placeholder="dd/mm/aaaa">
 <br>
                     <label for="cpf">CPF</label>
-                    <input type="text" name="" id="cpf">
+                    <input type="text" name="cpf" id="cpf" maxlength="14" placeholder="000.000.000-00">
 
                 </fieldset>
 
@@ -90,7 +90,38 @@
             <button type="submit">Enviar</button>
         </form>
 
-    </section>
+        <aside class="preview-panel" aria-live="polite">
+
+        <h3>Dados</h3>
+        <ul>
+            <li data-preview-field="nome"><strong>Nome:</strong> <span id="preview-nome">-</span></li>
+            <li data-preview-field="atendimento"><strong>Atendimento:</strong> <span id="preview-atendimento">-</span></li>
+            <li data-preview-field="dataNascimento"><strong>Data Nascimento:</strong> <span id="preview-dataNascimento">-</span></li>
+            <li data-preview-field="cpf"><strong>CPF:</strong> <span id="preview-cpf">-</span></li>
+        </ul>
+
+        <h3>Sinais Vitais</h3>
+        <ul>
+            <li data-preview-field="frequenciaCardiaca"><strong>FC:</strong> <span id="preview-frequenciaCardiaca">-</span></li>
+            <li data-preview-field="frequenciaRespiratoria"><strong>FR:</strong> <span id="preview-frequenciaRespiratoria">-</span></li>
+            <li data-preview-field="temperatura"><strong>Temperatura:</strong> <span id="preview-temperatura">-</span></li>
+            <li data-preview-field="pressaoSistolica"><strong>PAS:</strong> <span id="preview-pressaoSistolica">-</span></li>
+            <li data-preview-field="pressaoDiastolica"><strong>PAD:</strong> <span id="preview-pressaoDiastolica">-</span></li>
+            <li data-preview-field="saturacao"><strong>Saturação:</strong> <span id="preview-saturacao">-</span></li>
+        </ul>
+
+        <h3>Protocolo</h3>
+        <ul>
+            <li data-preview-field="horaLactatoSolicitado"><strong>Lactato Solicitado:</strong> <span id="preview-horaLactatoSolicitado">-</span></li>
+            <li data-preview-field="horaLactatoColetado"><strong>Lactato Coletado:</strong> <span id="preview-horaLactatoColetado">-</span></li>
+            <li data-preview-field="horaAntibioticoPrescrito"><strong>Antibiótico Prescrito:</strong> <span id="preview-horaAntibioticoPrescrito">-</span></li>
+            <li data-preview-field="horaAntibioticoAdministrado"><strong>Antibiótico Administrado:</strong> <span id="preview-horaAntibioticoAdministrado">-</span></li>
+            <li data-preview-field="statusSepse"><strong>Status Sepse:</strong> <span id="preview-statusSepse">-</span></li>
+        </ul>
+    </aside>
+</section>
+
+
 <script src="../js/index.js"></script>
 </body>
 </html>

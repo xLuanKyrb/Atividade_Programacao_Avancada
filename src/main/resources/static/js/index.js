@@ -1,38 +1,159 @@
 function renderizarPaciente(paciente) {
     const tabela = document.getElementById('tabela-pacientes');
+    if (!tabela) return;
+
     const linha = document.createElement('tr');
     linha.innerHTML = `
-        <td>${paciente.nome}</td>
-        <td>${paciente.atendimento}</td>
-        <td>${paciente.dataNascimento}</td>
-        <td>${paciente.cpf}</td>
+        <td>${paciente.nome || ''}</td>
+        <td>${paciente.atendimento || ''}</td>
+        <td>${paciente.dataNascimento || ''}</td>
+        <td>${paciente.cpf || ''}</td>
     `;
     tabela.appendChild(linha);
 }
 
-const formulario = document.querySelector('form');
-formulario.addEventListener('submit', function(event) {
-    event.preventDefault();
+const formulario = document.getElementById('protocolo-form') || document.querySelector('form');
 
-    const dados = {
-        nome: document.getElementById('nome').value,
-        atendimento: document.getElementById('atendimento').value,
-        dataNascimento: document.getElementById('dataNascimento').value,
-        cpf: document.getElementById('cpf').value,
+function lerCampo(chave) {
+    const porId = document.getElementById(chave);
+    if (porId) return porId.value;
 
-        frequenciaCardiaca: document.getElementById('frequenciaCardiaca').value,
-        frequenciaRespiratoria: document.getElementById('frequenciaRespiratoria').value,
-        temperatura: document.getElementById('temperatura').value,
-        pressaoSistolica: document.getElementById('pressaoSistolica').value,
-        pressaoDiastolica: document.getElementById('pressaoDiastolica').value,
-        saturacao: document.getElementById('saturacao').value,
+    const porName = formulario?.elements?.namedItem(chave);
+    return porName ? porName.value : '';
+}
 
-        horaLactatoSolicitado: document.getElementById('horaLactatoSolicitado').value,
-        horaLactatoColetado: document.getElementById('horaLactatoColetado').value,
-        horaAntibioticoPrescrito: document.getElementById('horaAntibioticoPrescrito').value,
-        horaAntibioticoAdministrado: document.getElementById('horaAntibioticoAdministrado').value,
-        statusSepse: document.getElementById('statusSepse').value
+function coletarDadosFormulario() {
+    return {
+        nome: lerCampo('nome'),
+        atendimento: lerCampo('atendimento'),
+        dataNascimento: lerCampo('dataNascimento'),
+        cpf: lerCampo('cpf'),
+        frequenciaCardiaca: lerCampo('frequenciaCardiaca'),
+        frequenciaRespiratoria: lerCampo('frequenciaRespiratoria'),
+        temperatura: lerCampo('temperatura'),
+        pressaoSistolica: lerCampo('pressaoSistolica'),
+        pressaoDiastolica: lerCampo('pressaoDiastolica'),
+        saturacao: lerCampo('saturacao'),
+        horaLactatoSolicitado: lerCampo('horaLactatoSolicitado'),
+        horaLactatoColetado: lerCampo('horaLactatoColetado'),
+        horaAntibioticoPrescrito: lerCampo('horaAntibioticoPrescrito'),
+        horaAntibioticoAdministrado: lerCampo('horaAntibioticoAdministrado'),
+        statusSepse: lerCampo('statusSepse')
     };
+}
+
+function formatarData(valor) {
+    const digitos = valor.replace(/\D/g, '').slice(0, 8);
+    if (digitos.length <= 2) return digitos;
+    if (digitos.length <= 4) return `${digitos.slice(0, 2)}/${digitos.slice(2)}`;
+    return `${digitos.slice(0, 2)}/${digitos.slice(2, 4)}/${digitos.slice(4)}`;
+}
+function formatarCpf(valor) {
+    const digitos = valor.replace(/\D/g, '').slice(0, 11);
+    return digitos
+        .replace(/^(\d{3})(\d)/, '$1.$2')
+        .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/\.(\d{3})(\d)/, '.$1-$2');
+}
+
+function formatarHora(valor) {
+    const digitos = valor.replace(/\D/g, '').slice(0, 4);
+    if (digitos.length <= 2) return digitos;
+    return `${digitos.slice(0, 2)}:${digitos.slice(2)}`;
+}
+
+function aplicarMascaras() {
+    const cpf = document.getElementById('cpf');
+    const horas = [
+        document.getElementById('lactatoPrescrito'),
+        document.getElementById('lactatoColetado'),
+        document.getElementById('antibioticoPrescrito'),
+        document.getElementById('antibioticoAdministrado')
+    ].filter(Boolean);
+    const dataNascimento = document.getElementById('dataNascimento');
+
+    if (dataNascimento) {
+        dataNascimento.addEventListener('input', () => {
+            dataNascimento.value = formatarData(dataNascimento.value);
+            validarCampo(dataNascimento);
+            atualizarPreview();
+        });
+    }
+
+    if (cpf) {
+        cpf.addEventListener('input', () => {
+            cpf.value = formatarCpf(cpf.value);
+            validarCampo(cpf);
+            atualizarPreview();
+        });
+    }
+
+    horas.forEach((campo) => {
+        campo.addEventListener('input', () => {
+            campo.value = formatarHora(campo.value);
+            validarCampo(campo);
+            atualizarPreview();
+        });
+    });
+}
+
+function validarCampo(campo) {
+    if (!campo || campo.dataset.required !== 'true') return true;
+
+    const valido = campo.value.trim() !== '';
+    campo.classList.toggle('campo-invalido', !valido);
+    return valido;
+}
+
+function validarObrigatorios() {
+    const obrigatorios = formulario.querySelectorAll('[data-required="true"]');
+    let tudoValido = true;
+
+    obrigatorios.forEach((campo) => {
+        const ok = validarCampo(campo);
+        if (!ok) tudoValido = false;
+    });
+
+    return tudoValido;
+}
+
+function atualizarPreview() {
+    const dados = coletarDadosFormulario();
+
+    Object.entries(dados).forEach(([chave, valor]) => {
+        const alvo = document.getElementById(`preview-${chave}`);
+        if (!alvo) return;
+
+        const texto = valor && valor.trim() ? valor : '-';
+        alvo.textContent = texto;
+
+        const linha = document.querySelector(`[data-preview-field="${chave}"]`);
+        if (linha) {
+            linha.classList.toggle('oculto', texto === '-');
+        }
+    });
+}
+
+if (formulario) {
+    aplicarMascaras();
+    atualizarPreview();
+
+    formulario.addEventListener('input', (event) => {
+        if (event.target instanceof HTMLInputElement) {
+            validarCampo(event.target);
+        }
+        atualizarPreview();
+    });
+
+    formulario.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        if (!validarObrigatorios()) {
+            alert('Preencha os campos obrigatórios destacados em vermelho.');
+            return;
+        }
+
+        const dados = coletarDadosFormulario();
 
         fetch('http://localhost:8080/api/protocolos', {
             method: 'POST',
@@ -41,15 +162,16 @@ formulario.addEventListener('submit', function(event) {
             },
             body: JSON.stringify(dados)
         })
-
         .then(response => {
-            if(!response.ok) throw new Error('Erro ao criar protocolo');
-            return response.json(); 
+            if (!response.ok) throw new Error('Erro ao criar protocolo');
+            return response.json();
         })
-
         .then(novoProtocolo => {
-            renderizarLinhaTabela(novoProtocolo)
+            if (typeof renderizarLinhaTabela === 'function') {
+                renderizarLinhaTabela(novoProtocolo);
+            }
             formulario.reset();
+            atualizarPreview();
             alert('Protocolo criado com sucesso!');
         })
         .catch(error => {
@@ -57,3 +179,5 @@ formulario.addEventListener('submit', function(event) {
             alert('Erro ao criar protocolo. Tente novamente.');
         });
     });
+   
+}
