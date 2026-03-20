@@ -1,14 +1,18 @@
-package protocolo.demo.model.entity;
+package protocolo.demo.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "usuario")
-public class Usuario {
-    @EqualsAndHashCode.Include
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class Usuario extends Pessoa{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,9 +26,7 @@ public class Usuario {
     private boolean primeiroAcesso = true;
     private String perfil;
     private String status = "ATIVO";
+;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    private Pessoa pessoa;
 }
     
