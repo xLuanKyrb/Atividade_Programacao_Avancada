@@ -1,127 +1,26 @@
 <!doctype html>
-<html lang=pt-br>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Protocolo Sepse</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <meta name="description" content="Protocolo Sepse">
-    
+    <title>Login</title>
 </head>
 <body>
-
-<header>
-    
-</header>
-
-    <section class = "form-layout">
-        <form id="protocolo-form" method="submit">
-            <fieldset>
-                <legend>Dados</legend>
-
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" name="nome">
-<br>
-                    <label for="atendimento">Atendimento:</label>
-                    <input type="text" id="atendimento" name="atendimento">
-<br>
-                    <label for="dataNascimento">Data Nascimento</label>
-                    <input type="text" name="dataNascimento" id="dataNascimento" maxlength="10" placeholder="dd/mm/aaaa">
-<br>
-                    <label for="cpf">CPF</label>
-                    <input type="text" name="cpf" id="cpf" maxlength="14" placeholder="000.000.000-00">
-
-                </fieldset>
-
-            <fieldset>
-                <legend>Sinais Vitais</legend>
-
-                <label for="fc">FC (Frequência Cardíaca)</label>
-                <input type="text" id="fc" name="frequenciaCardiaca">
-                <br>
-
-                <label for="fr">FR (Frequência Respiratória)</label>
-                <input type="text" id="fr" name="frequenciaRespiratoria">
-                <br>
-
-                <label for="temperatura">Temperatura</label>
-                <input type="text" id="temperatura" name="temperatura">
-                <br>
-
-                <label for="pas">PAS (Pressão Arterial Sistólica)</label>
-                <input type="text" id="pas" name="pressaoSistolica">
-                <br>
-
-                <label for="pad">PAD (Pressão Arterial Diastólica)</label>
-                <input type="text" id="pad" name="pressaoDiastolica">
-                <br>
-
-                <label for="sat">Saturação</label>
-                <input type="text" id="sat" name="saturacao">
-                <br>
-
-            </fieldset>
-
-            <fieldset>
-                <legend>Protocolo</legend>
-
-                <label for="lactatoPrescrito">Hora Lactato Solicitado</label>
-                <input type="text" id="lactatoPrescrito" name="horaLactatoSolicitado">
-                <br>
-
-                <label for="lactatoColetado">Hora Lactato Coletado</label>
-                <input type="text" id="lactatoColetado" name="horaLactatoColetado">
-                <br>
-
-                <label for="antibioticoPrescrito">Hora Prescrito Antibiotico</label>
-                <input type="text" id="antibioticoPrescrito" name="horaAntibioticoPrescrito">
-                <br>
-
-                <label for="antibioticoAdministrado">Hora Administrado Antibiotico</label>
-                <input type="text" id="antibioticoAdministrado" name="horaAntibioticoAdministrado">
-                <br>
-
-                <label for="status">Status Sepse</label>
-                <input type="text" id="status" name="statusSepse">
-                <br>
-
-            </fieldset>    
-            
-            <button type="submit">Enviar</button>
+    <div class="login-container">
+        <h2>Login - Protocolo Sepse</h2>
+        <form onsubmit="realizarLogin(event)">
+            <div class="form-group">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
         </form>
+    </div>
 
-        <aside class="preview-panel" aria-live="polite">
-
-        <h3>Dados</h3>
-        <ul>
-            <li data-preview-field="nome"><strong>Nome:</strong> <span id="preview-nome">-</span></li>
-            <li data-preview-field="atendimento"><strong>Atendimento:</strong> <span id="preview-atendimento">-</span></li>
-            <li data-preview-field="dataNascimento"><strong>Data Nascimento:</strong> <span id="preview-dataNascimento">-</span></li>
-            <li data-preview-field="cpf"><strong>CPF:</strong> <span id="preview-cpf">-</span></li>
-        </ul>
-
-        <h3>Sinais Vitais</h3>
-        <ul>
-            <li data-preview-field="frequenciaCardiaca"><strong>FC:</strong> <span id="preview-frequenciaCardiaca">-</span></li>
-            <li data-preview-field="frequenciaRespiratoria"><strong>FR:</strong> <span id="preview-frequenciaRespiratoria">-</span></li>
-            <li data-preview-field="temperatura"><strong>Temperatura:</strong> <span id="preview-temperatura">-</span></li>
-            <li data-preview-field="pressaoSistolica"><strong>PAS:</strong> <span id="preview-pressaoSistolica">-</span></li>
-            <li data-preview-field="pressaoDiastolica"><strong>PAD:</strong> <span id="preview-pressaoDiastolica">-</span></li>
-            <li data-preview-field="saturacao"><strong>Saturação:</strong> <span id="preview-saturacao">-</span></li>
-        </ul>
-
-        <h3>Protocolo</h3>
-        <ul>
-            <li data-preview-field="horaLactatoSolicitado"><strong>Lactato Solicitado:</strong> <span id="preview-horaLactatoSolicitado">-</span></li>
-            <li data-preview-field="horaLactatoColetado"><strong>Lactato Coletado:</strong> <span id="preview-horaLactatoColetado">-</span></li>
-            <li data-preview-field="horaAntibioticoPrescrito"><strong>Antibiótico Prescrito:</strong> <span id="preview-horaAntibioticoPrescrito">-</span></li>
-            <li data-preview-field="horaAntibioticoAdministrado"><strong>Antibiótico Administrado:</strong> <span id="preview-horaAntibioticoAdministrado">-</span></li>
-            <li data-preview-field="statusSepse"><strong>Status Sepse:</strong> <span id="preview-statusSepse">-</span></li>
-        </ul>
-    </aside>
-</section>
-
-
-<script src="../js/index.js"></script>
+    <script src="../js/login.js"></script>
 </body>
 </html>
