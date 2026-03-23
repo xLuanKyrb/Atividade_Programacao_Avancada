@@ -1,96 +1,24 @@
 <!doctype html>
-<html lang=pt-br>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Protocolo Sepse</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <meta name="description" content="Protocolo Sepse">
-    
+    <title>Login</title>
 </head>
 <body>
-
-<header>
-    
-</header>
-
-    <section>
-        <form action="submit" method="post">
-            <fieldset>
-                <legend>Dados</legend>
-
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" name="nome">
-<br>
-                    <label for="atendimento">Atendimento:</label>
-                    <input type="text" id="atendimento" name="atendimento">
-<br>
-                    <label for="dataNascimento">Data Nascimento</label>
-                    <input type="text" name="" id="dataNascimento">
-<br>
-                    <label for="cpf">CPF</label>
-                    <input type="text" name="" id="cpf">
-
-                </fieldset>
-
-            <fieldset>
-                <legend>Sinais Vitais</legend>
-
-                <label for="fc">FC (Frequência Cardíaca)</label>
-                <input type="text" id="fc" name="frequenciaCardiaca">
-                <br>
-
-                <label for="fr">FR (Frequência Respiratória)</label>
-                <input type="text" id="fr" name="frequenciaRespiratoria">
-                <br>
-
-                <label for="temperatura">Temperatura</label>
-                <input type="text" id="temperatura" name="temperatura">
-                <br>
-
-                <label for="pas">PAS (Pressão Arterial Sistólica)</label>
-                <input type="text" id="pas" name="pressaoSistolica">
-                <br>
-
-                <label for="pad">PAD (Pressão Arterial Diastólica)</label>
-                <input type="text" id="pad" name="pressaoDiastolica">
-                <br>
-
-                <label for="sat">Saturação</label>
-                <input type="text" id="sat" name="saturacao">
-                <br>
-
-            </fieldset>
-
-            <fieldset>
-                <legend>Protocolo</legend>
-
-                <label for="lactatoPrescrito">Hora Lactato Solicitado</label>
-                <input type="text" id="lactatoPrescrito" name="horaLactatoSolicitado">
-                <br>
-
-                <label for="lactatoColetado">Hora Lactato Coletado</label>
-                <input type="text" id="lactatoColetado" name="horaLactatoColetado">
-                <br>
-
-                <label for="antibioticoPrescrito">Hora Prescrito Antibiotico</label>
-                <input type="text" id="antibioticoPrescrito" name="horaAntibioticoPrescrito">
-                <br>
-
-                <label for="antibioticoAdministrado">Hora Administrado Antibiotico</label>
-                <input type="text" id="antibioticoAdministrado" name="horaAntibioticoAdministrado">
-                <br>
-
-                <label for="status">Status Sepse</label>
-                <input type="text" id="status" name="statusSepse">
-                <br>
-
-            </fieldset>    
-            
-            <button type="submit">Enviar</button>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="/login" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
         </form>
-
-    </section>
-<script src="../js/index.js"></script>
+    </div>
 </body>
 </html>
