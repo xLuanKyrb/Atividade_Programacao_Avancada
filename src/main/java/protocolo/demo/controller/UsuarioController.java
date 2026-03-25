@@ -81,4 +81,4 @@ public class UsuarioController {
             }).orElse(ResponseEntity.notFound().build());
         }
     }
-}
+
