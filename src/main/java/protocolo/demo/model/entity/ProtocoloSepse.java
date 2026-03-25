@@ -24,10 +24,10 @@ public class ProtocoloSepse {
     private Double frequenciaRespiratoria;
     private Double temperatura;
     private Double pressaoSistolica;
-    private Double pressaoDialostica;
+    private Double pressaoDiastolica;
     private Double saturacao;
     private LocalDateTime horaLactatoSolicitado;
-    private LocalDateTime horaLactadoColetado;
+    private LocalDateTime horaLactatoColetado;
     private LocalDateTime horaAntibioticoPrescrito;
     private LocalDateTime horaAntibioticoAdministrado;
 }

@@ -1,26 +1,33 @@
 package protocolo.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import protocolo.demo.model.entity.ProtocoloSepse;
-import protocolo.demo.repository.ProtocoloRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import protocolo.demo.dto.CriarProtocoloRequest;
+import protocolo.demo.dto.ProtocoloResponse;
+import protocolo.demo.service.ProtocoloService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
+@RestController
+@RequestMapping("/api/protocolos")
 public class ProtocoloController {
 
-    @Autowired
-    private ProtocoloRepository repository;
+    private final ProtocoloService protocoloService;
+
+    public ProtocoloController(ProtocoloService protocoloService) {
+        this.protocoloService = protocoloService;
+    }
 
     @PostMapping
-    public ProtocoloSepse salvar(@RequestBody ProtocoloSepse protocolo){
-        return repository.save(protocolo);
+    public ResponseEntity<ProtocoloResponse> criar(@RequestBody CriarProtocoloRequest request) {
+        ProtocoloResponse criado = protocoloService.criar(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
     }
 
     @GetMapping
-    public List<ProtocoloSepse> listar(){
-        return repository.findAll();
+    public List<ProtocoloResponse> listar() {
+        return protocoloService.listar();
     }
 }

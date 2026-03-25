@@ -155,29 +155,58 @@ if (formulario) {
 
         const dados = coletarDadosFormulario();
 
-        fetch('http://localhost:8080/api/protocolos', {
+        const origemEhBackend =
+            window.location.protocol !== 'file:' &&
+            (window.location.port === '8080' || window.location.port === '');
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || 'null');
+
+        if (origemEhBackend) {
+            if (!usuarioLogado || !usuarioLogado.id) {
+                alert('Você precisa estar logado para enviar o protocolo.');
+                window.location.href = '/html/index.html';
+                return;
+            }
+            dados.usuarioId = usuarioLogado.id;
+        }
+
+        const registroLocal = {
+            request: dados,
+            response: null,
+            mode: 'local',
+            createdAt: new Date().toISOString()
+        };
+
+        function salvarEIrParaDashboard(registro) {
+            localStorage.setItem('ultimoProtocolo', JSON.stringify(registro));
+            window.location.href = '/html/dashboard.html';
+        }
+
+        if (!origemEhBackend) {
+            salvarEIrParaDashboard(registroLocal);
+            return;
+        }
+
+        fetch('/api/protocolos', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
         })
-        .then(response => {
-            if (!response.ok) throw new Error('Erro ao criar protocolo');
-            return response.json();
-        })
-        .then(novoProtocolo => {
-            if (typeof renderizarLinhaTabela === 'function') {
-                renderizarLinhaTabela(novoProtocolo);
-            }
-            formulario.reset();
-            atualizarPreview();
-            alert('Protocolo criado com sucesso!');
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao criar protocolo. Tente novamente.');
-        });
+            .then((response) => {
+                if (!response.ok) throw new Error('Erro ao criar protocolo');
+                return response.json();
+            })
+            .then((novoProtocolo) => {
+                salvarEIrParaDashboard({
+                    ...registroLocal,
+                    response: novoProtocolo,
+                    mode: 'api'
+                });
+            })
+            .catch((error) => {
+                console.error('Erro:', error);
+                alert('Não foi possível salvar no servidor. Vou mostrar o dashboard apenas com os dados locais.');
+                salvarEIrParaDashboard(registroLocal);
+            });
     });
 
 }
