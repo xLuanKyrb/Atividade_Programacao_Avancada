@@ -22,6 +22,7 @@ public class Usuario {
     private boolean primeiroAcesso = true;
     private String perfil;
     private String status = "ATIVO";
+    private String conselho;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")

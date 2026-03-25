@@ -38,6 +38,28 @@ public class UsuarioController {
             }
         }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
+        return repository.findById(id).map(usuarioExistente -> {
+
+            // Atualiza os dados básicos do usuário
+            usuarioExistente.setPerfil(usuarioAtualizado.getPerfil());
+            usuarioExistente.setConselho(usuarioAtualizado.getConselho());
+
+            // Atualiza os dados da Pessoa amarrada a ele
+            if (usuarioExistente.getPessoa() != null && usuarioAtualizado.getPessoa() != null) {
+                usuarioExistente.getPessoa().setNomeCompleto(usuarioAtualizado.getPessoa().getNomeCompleto());
+                usuarioExistente.getPessoa().setCpf(usuarioAtualizado.getPessoa().getCpf());
+                // Adicione o telefone aqui também se você colocou na classe Pessoa!
+            }
+
+            // Salva as alterações no banco
+            Usuario salvo = repository.save(usuarioExistente);
+            return ResponseEntity.ok(salvo);
+
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
         // 4. RESET DE SENHA (Vindo do Painel Admin)
         @PatchMapping("/{id}/senha")
         public ResponseEntity<?> resetarSenha(@PathVariable Long id, @RequestBody Map<String, String> payload) {
