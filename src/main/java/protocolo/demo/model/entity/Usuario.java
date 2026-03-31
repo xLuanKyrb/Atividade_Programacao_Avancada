@@ -1,17 +1,18 @@
 package protocolo.demo.model.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+import lombok.NoArgsConstructor;
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "usuario")
-public class Usuario {
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Data
+@EqualsAndHashCode(callSuper = true)
+@PrimaryKeyJoinColumn(name = "pessoa_id")
+public class Usuario extends Pessoa {
 
     @Column(unique = true, nullable = false)
     private String login;
@@ -19,12 +20,8 @@ public class Usuario {
     @Column(nullable = false)
     private String senha;
 
-    private boolean primeiroAcesso = true;
     private String perfil;
+    private String conselho;
     private String status = "ATIVO";
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    private Pessoa pessoa;
+    private boolean primeiroAcesso = true;
 }
-    

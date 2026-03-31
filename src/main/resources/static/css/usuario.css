@@ -444,3 +444,63 @@ body.admin-page {
         .nav-pills-custom .nav-link.active { background-color: white; color: var(--primary-hosp); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
         .protocol-active { border-left: 4px solid var(--emergency); }
+
+        /* Fundo escuro atrás do modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex; /* Ocultado por padrão pelo inline style "display: none" no HTML */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* A caixinha branca do modal */
+.modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #102a43;
+}
+
+.modal-content p {
+    color: #486581;
+    margin-bottom: 15px;
+}
+
+/* Botões do modal */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-cancelar {
+    background-color: #e2e8f0;
+    color: #334e68;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-confirmar {
+    background-color: #1864ab;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
