@@ -59,14 +59,11 @@ public class ProtocoloService {
         Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não encontrado"));
 
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNomeCompleto(request.getNome().trim());
-        pessoa.setCpf(limparCpf(request.getCpf()));
-        pessoa.setDataNascimento(parseDataNascimento(request.getDataNascimento()));
-
         Paciente paciente = new Paciente();
+        paciente.setNomeCompleto(request.getNome().trim());
+        paciente.setCpf(limparCpf(request.getCpf()));
+        paciente.setDataNascimento(parseDataNascimento(request.getDataNascimento()));
         paciente.setNumeroProntuario(valorOuNulo(request.getAtendimento()));
-        paciente.setPessoa(pessoa);
         paciente = pacienteRepository.save(paciente);
 
         Atendimento atendimento = new Atendimento();
