@@ -1,39 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - Protocolo Sepse</title>
+    <meta name="description" content="Dashboard do Protocolo Sepse">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <header>
-        <h1>Dashboard</h1>
+        <h1>Dashboard - Protocolo Sepse</h1>
+        <p class="subtitle">Resumo visual do paciente e do protocolo preenchido.</p>
     </header>
 
-    <section>
-        <table>
-            <thead>
-                <tr>
-                    <th>Metric</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Total Users</td>
-                    <td>1500</td>
-                </tr>
-                <tr>
-                    <td>Active Sessions</td>
-                    <td>300</td>
-                </tr>
-                <tr>
-                    <td>Revenue</td>
-                    <td>$10,000</td>
-                </tr>
-            </tbody>
-        </table>
+    <main>
+        <section class="dashboard-actions">
+            <a class="button-link" href="/html/cadastro.html">Voltar ao cadastro</a>
+            <button id="btn-limpar" type="button">Limpar dados salvos</button>
+        </section>
 
-    </section>
+        <section id="dashboard-root" class="dashboard-grid" aria-live="polite"></section>
+
+        <section class="dashboard-notes">
+            <p class="note">
+                Observação: As classificações (OK/Atenção) são apenas ilustrativas para fins acadêmicos e não substituem avaliação clínica.
+            </p>
+        </section>
+    </main>
+
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>

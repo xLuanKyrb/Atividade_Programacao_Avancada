@@ -11,15 +11,27 @@ import java.util.Optional;
 public class UsuarioService {
 
     @Autowired
-    private UsuarioRepository repository;
+    private UsuarioRepository usuarioRepository; // Injetando o repositório corretamente
 
-    public Usuario autenticar(String login, String senha){
-    Optional<Usuario> usuarioOpt = repository.findByLogin(login);
+    public Usuario autenticar(String login, String senha) {
+        System.out.println("Tentativa de login: " + login + " | Senha: " + senha);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByLogin(login);
 
-    if (usuarioOpt.isPresent()&& usuarioOpt.get().getSenha().equals(senha)){
-        return usuarioOpt.get();
-    }
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
 
-    return null;
+            if (usuario.getSenha().equals(senha)) {
+                if ("INATIVO".equals(usuario.getStatus())){
+                    System.out.println("Login incorreto!");
+                    return null;
+                }
+                return usuario;
+            } else {
+                System.out.println("Login negado: Senha incorreta.");
+            }
+        } else {
+            System.out.println("Login negado: Usuário não encontrado no banco.");
+        }
+        return null;
     }
 }

@@ -2,23 +2,16 @@ package protocolo.demo.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.LocalDate;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "paciente")
 @Data
-public class Paciente {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@EqualsAndHashCode(callSuper = true)
+@PrimaryKeyJoinColumn(name = "pessoa_id")
+public class Paciente extends Pessoa {
 
     private String numeroProntuario;
     private String tipoSanguineo;
     private String alergias;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    private Pessoa pessoa;
 }

@@ -1,5 +1,6 @@
 package protocolo.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import protocolo.demo.model.enums.GrauParentesco;
@@ -29,5 +30,6 @@ public class Telefone {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id", nullable = false)
+    @JsonIgnore
     private Pessoa pessoa;
 }
